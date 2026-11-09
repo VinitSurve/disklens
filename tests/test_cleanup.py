@@ -279,8 +279,9 @@ def test_cleanup_category_validation() -> None:
     assert normalize_cleanup_category("BUILD") == "build_artifacts"
     with pytest.raises(UsageError):
         normalize_cleanup_category("invalid_cat")
+    target = Path("/System") if Path("/System").exists() else Path("/")
     with pytest.raises(SafetyError):
-        discover_cleanup_candidates(Path("/System"))
+        discover_cleanup_candidates(target)
 
 
 def test_cleanup_recognized_macos_user_caches(isolated_env: Path) -> None:
